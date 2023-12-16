@@ -41,8 +41,8 @@ List allTasks = [
   Task(title: "title 1", status: false),
   Task(title: "title 2", status: true),
   Task(title: "title 3", status: false),
-  Task(title: "title 4", status: false),
-  Task(title: "title 5", status: false),
+  Task(title: "title 4", status: true),
+  Task(title: "title 5", status: true),
 ];
 
 class _TodoAppState extends State<TodoApp> {
@@ -70,6 +70,7 @@ class _TodoAppState extends State<TodoApp> {
               ),
               ...allTasks.map((item) => Todocard(
                     vartitle: item.title,
+                    doneOrNot: item.status,
                   ))
             ],
           ),

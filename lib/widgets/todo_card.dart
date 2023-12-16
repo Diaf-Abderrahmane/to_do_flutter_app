@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 
 class Todocard extends StatelessWidget {
-  const Todocard({Key? key, required this.vartitle}) : super(key: key);
+  const Todocard({Key? key, required this.vartitle, required this.doneOrNot})
+      : super(key: key);
 
   final String vartitle;
+  final bool doneOrNot;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +31,9 @@ class Todocard extends StatelessWidget {
               ),
             ),
             Icon(
-              Icons.close,
+              doneOrNot ? Icons.check : Icons.close,
+              color: doneOrNot ? Colors.green : Colors.red,
               size: 27,
-              color: Colors.red,
             )
           ],
         ),
