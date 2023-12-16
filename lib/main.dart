@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:to_do_flutter_app/widgets/counter.dart';
 import 'package:to_do_flutter_app/widgets/todo_card.dart';
 
 void main() {
@@ -37,24 +38,35 @@ class Task {
   });
 }
 
-List allTasks = [
-  Task(title: "title 1", status: false),
-  Task(title: "title 2", status: true),
-  Task(title: "title 3", status: false),
-  Task(title: "title 4", status: true),
-  Task(title: "title 5", status: true),
-];
-
 class _TodoAppState extends State<TodoApp> {
+  List allTasks = [
+    Task(title: "title 1", status: true),
+    Task(title: "title 2", status: true),
+    Task(title: "title 3", status: true),
+    Task(title: "title 4", status: true),
+    Task(title: "lets go", status: true),
+  ];
   final myController = TextEditingController();
 
-  myfunc() {
+  newTask() {
     setState(() {
       allTasks.add(
         Task(title: myController.text, status: false),
       );
       // myText = myController.text;
     });
+  }
+
+  int calculateCompletedTasks() {
+    int completedTasks = 0;
+
+    for (var item in allTasks) {
+      if (item.status) {
+        completedTasks++;
+      }
+    }
+
+    return completedTasks;
   }
 
   @override
@@ -90,7 +102,7 @@ class _TodoAppState extends State<TodoApp> {
                       ),
                       TextButton(
                           onPressed: () {
-                            myfunc();
+                            newTask();
                             Navigator.pop(context);
                           },
                           child: Text(
@@ -128,6 +140,10 @@ class _TodoAppState extends State<TodoApp> {
             children: [
               SizedBox(
                 height: 40,
+              ),
+              Counter(
+                allTodos: allTasks.length,
+                allCompleted: calculateCompletedTasks(),
               ),
               ...allTasks.map((item) => Todocard(
                     vartitle: item.title,
