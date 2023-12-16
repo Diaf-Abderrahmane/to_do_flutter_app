@@ -27,6 +27,24 @@ class TodoApp extends StatefulWidget {
   State<TodoApp> createState() => _TodoAppState();
 }
 
+class Task {
+  String title;
+  bool status;
+
+  Task({
+    required this.title,
+    required this.status,
+  });
+}
+
+List allTasks = [
+  Task(title: "title 1", status: false),
+  Task(title: "title 2", status: true),
+  Task(title: "title 3", status: false),
+  Task(title: "title 4", status: false),
+  Task(title: "title 5", status: false),
+];
+
 class _TodoAppState extends State<TodoApp> {
   @override
   Widget build(BuildContext context) {
@@ -42,7 +60,7 @@ class _TodoAppState extends State<TodoApp> {
           ),
           backgroundColor: Color.fromRGBO(58, 66, 86, 0.1),
         ),
-        body: Container(
+        body: SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,10 +68,9 @@ class _TodoAppState extends State<TodoApp> {
               SizedBox(
                 height: 40,
               ),
-              Todocard(),
-              Todocard(),
-              Todocard(),
-              Todocard(),
+              ...allTasks.map((item) => Todocard(
+                    vartitle: item.title,
+                  ))
             ],
           ),
         ));

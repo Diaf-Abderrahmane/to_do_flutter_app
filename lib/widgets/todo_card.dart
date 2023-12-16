@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 
 class Todocard extends StatelessWidget {
-  const Todocard({super.key});
+  const Todocard({Key? key, required this.vartitle}) : super(key: key);
+
+  final String vartitle;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class Todocard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "data",
+              vartitle,
               style: TextStyle(
                 fontSize: 22,
                 color: Colors.black,
