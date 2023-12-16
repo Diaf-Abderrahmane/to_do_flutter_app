@@ -46,6 +46,17 @@ List allTasks = [
 ];
 
 class _TodoAppState extends State<TodoApp> {
+  final myController = TextEditingController();
+
+  myfunc() {
+    setState(() {
+      allTasks.add(
+        Task(title: myController.text, status: false),
+      );
+      // myText = myController.text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +81,7 @@ class _TodoAppState extends State<TodoApp> {
                   child: Column(
                     children: [
                       TextField(
+                        controller: myController,
                         maxLength: 20,
                         decoration: InputDecoration(hintText: "Add new Task"),
                       ),
@@ -78,6 +90,7 @@ class _TodoAppState extends State<TodoApp> {
                       ),
                       TextButton(
                           onPressed: () {
+                            myfunc();
                             Navigator.pop(context);
                           },
                           child: Text(
@@ -90,12 +103,12 @@ class _TodoAppState extends State<TodoApp> {
               },
             );
           },
+          backgroundColor: Colors.amber,
           child: Icon(
             Icons.add,
             color: Colors.blueGrey,
             size: 32,
           ),
-          backgroundColor: Colors.amber,
         ),
         backgroundColor: Colors.amber[100],
         // backgroundColor: Color.fromRGBO(58, 66, 86, 0.7),
