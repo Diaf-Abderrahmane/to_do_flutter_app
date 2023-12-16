@@ -49,6 +49,54 @@ class _TodoAppState extends State<TodoApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showModalBottomSheet(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+              ),
+              clipBehavior: Clip
+                  .antiAliasWithSaveLayer, // add this in order for the radius to apply
+              // isScrollControlled: true, || similar to height: double.infinity ( fills the entire height of the screen)
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  padding: EdgeInsets.all(40),
+                  height: double.infinity,
+                  width: double.infinity,
+                  color: Colors.blueGrey[100],
+                  child: Column(
+                    children: [
+                      TextField(
+                        maxLength: 20,
+                        decoration: InputDecoration(hintText: "Add new Task"),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            "ADD",
+                            style: TextStyle(fontSize: 20),
+                          ))
+                    ],
+                  ),
+                );
+              },
+            );
+          },
+          child: Icon(
+            Icons.add,
+            color: Colors.blueGrey,
+            size: 32,
+          ),
+          backgroundColor: Colors.amber,
+        ),
         backgroundColor: Colors.amber[100],
         // backgroundColor: Color.fromRGBO(58, 66, 86, 0.7),
         appBar: AppBar(
