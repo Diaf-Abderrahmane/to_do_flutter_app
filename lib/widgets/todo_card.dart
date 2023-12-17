@@ -8,16 +8,14 @@ class Todocard extends StatelessWidget {
       {Key? key,
       required this.index,
       required this.vartitle,
-      required this.doneOrNot,
       required this.delete,
-      required this.changeStatus})
+      required this.author})
       : super(key: key);
 
   final String vartitle;
-  final bool doneOrNot;
+  final String author;
   final int index;
   final Function delete;
-  final Function changeStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -30,40 +28,32 @@ class Todocard extends StatelessWidget {
           color: Color.fromRGBO(58, 66, 86, 0.3),
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               vartitle,
               style: TextStyle(
                 fontSize: 22,
-                decoration: doneOrNot
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-                color: doneOrNot ? Colors.black : Colors.white,
+                color: Colors.black,
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () {
-                    changeStatus(index);
-                  },
-                  child: Icon(
-                    doneOrNot ? Icons.check : Icons.close,
-                    color: doneOrNot ? Colors.green : Colors.red,
-                    size: 27,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
                 IconButton(
                     onPressed: () {
                       delete(index);
                     },
                     icon: Icon(Icons.delete),
                     color: Colors.black),
+                Text(
+                  author,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.black,
+                  ),
+                ),
               ],
             ),
           ],

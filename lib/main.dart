@@ -30,36 +30,31 @@ class TodoApp extends StatefulWidget {
 
 class Task {
   String title;
-  bool status;
+  String author;
 
   Task({
     required this.title,
-    required this.status,
+    required this.author,
   });
 }
 
 class _TodoAppState extends State<TodoApp> {
-  List allTasks = [
-    Task(title: "title 1", status: false),
-    Task(title: "title 2", status: false),
-    Task(title: "title 3", status: false),
-    Task(title: "title 4", status: true),
-    Task(title: "lets go", status: true),
-  ];
   final myController = TextEditingController();
+  final authorController = TextEditingController();
+  List allTasks = [
+    Task(title: "title 1", author: "samaykm"),
+    Task(title: "title 2", author: "samaykm"),
+    Task(title: "title 3", author: "samaykm"),
+    Task(title: "title 4", author: "ABDOU"),
+    Task(title: "lets go", author: "samaykm"),
+  ];
 
   newTask() {
     setState(() {
       allTasks.add(
-        Task(title: myController.text, status: false),
+        Task(title: myController.text, author: authorController.text),
       );
       // myText = myController.text;
-    });
-  }
-
-  changeStatus(int taskIndex) {
-    setState(() {
-      allTasks[taskIndex].status = !allTasks[taskIndex].status;
     });
   }
 
@@ -69,23 +64,23 @@ class _TodoAppState extends State<TodoApp> {
     });
   }
 
-  deleteAllTasks() {
-    setState(() {
-      allTasks.clear();
-    });
-  }
+  //  deleteAllTasks() {
+  //   setState(() {
+  //     allTasks.clear();
+  //   });
+  // }
 
-  int calculateCompletedTasks() {
-    int completedTasks = 0;
+  // int calculateCompletedTasks() {
+  //   int completedTasks = 0;
 
-    for (var item in allTasks) {
-      if (item.status) {
-        completedTasks++;
-      }
-    }
+  //   for (var item in allTasks) {
+  //     if (item.status) {
+  //       completedTasks++;
+  //     }
+  //   }
 
-    return completedTasks;
-  }
+  //   return completedTasks;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -112,8 +107,15 @@ class _TodoAppState extends State<TodoApp> {
                     children: [
                       TextField(
                         controller: myController,
+                        decoration: InputDecoration(hintText: "New Quote"),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        controller: authorController,
                         maxLength: 20,
-                        decoration: InputDecoration(hintText: "Add new Task"),
+                        decoration: InputDecoration(hintText: "Author"),
                       ),
                       SizedBox(
                         height: 20,
@@ -143,61 +145,55 @@ class _TodoAppState extends State<TodoApp> {
         backgroundColor: Colors.amber[200],
         // backgroundColor: Color.fromRGBO(58, 66, 86, 0.7),
         appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {
-                deleteAllTasks();
-              },
-              icon: Icon(Icons.delete_forever),
-              iconSize: 32,
-              color: Colors.red[400],
-            ),
-          ],
           elevation: 0,
           title: Text(
-            "TO DO APP",
+            "Best Quotes",
             style: TextStyle(
                 fontSize: 33, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           backgroundColor: Color.fromRGBO(58, 66, 86, 0.1),
         ),
-        body: SizedBox(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 40,
-              ),
-              Counter(
-                allTodos: allTasks.length,
-                allCompleted: calculateCompletedTasks(),
-              ),
-              Container(
-                margin: EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.amber[100],
+        body: SingleChildScrollView(
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
+                  child: Column(
+                    children: [
+                      ...List.generate(allTasks.length, (index) {
+                        // 'index' represents the index of the current item in the 'allTasks' list
+                        return Todocard(
+                          delete: deleteTask,
+                          index: index,
+                          author: allTasks[index].author,
+                          vartitle: allTasks[index].title,
+                        );
+                      }),
+                    ],
+                  ),
+                  // child: ListView.builder(
+                  //     itemCount: allTasks.length,
+                  //     itemBuilder: (BuildContext context, int index) {
+                  //       return Todocard(
+                  //         delete: deleteTask,
+                  //         index: index,
+                  //         author: allTasks[index].author,
+                  //         vartitle: allTasks[index].title,
+                  //       );
+                  //     }),
                 ),
-                height: 500,
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-                child: ListView.builder(
-                    itemCount: allTasks.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Todocard(
-                        changeStatus: changeStatus,
-                        delete: deleteTask,
-                        index: index,
-                        vartitle: allTasks[index].title,
-                        doneOrNot: allTasks[index].status,
-                      );
-                    }),
-              ),
-              // ...allTasks.map((item) => Todocard(
-              //       vartitle: item.title,
-              //       doneOrNot: item.status,
-              //     ))
-            ],
+                // ...allTasks.map((item) => Todocard(
+                //       vartitle: item.title,
+                //       doneOrNot: item.status,
+                //     ))
+              ],
+            ),
           ),
         ));
   }
