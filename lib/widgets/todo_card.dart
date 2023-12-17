@@ -9,13 +9,15 @@ class Todocard extends StatelessWidget {
       required this.index,
       required this.vartitle,
       required this.doneOrNot,
-      required this.delete})
+      required this.delete,
+      required this.changeStatus})
       : super(key: key);
 
   final String vartitle;
   final bool doneOrNot;
   final int index;
   final Function delete;
+  final Function changeStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +37,23 @@ class Todocard extends StatelessWidget {
               vartitle,
               style: TextStyle(
                 fontSize: 22,
-                color: Colors.black,
+                decoration: doneOrNot
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
+                color: doneOrNot ? Colors.black : Colors.white,
               ),
             ),
             Row(
               children: [
-                IconButton(
-                  onPressed: () {
-                    if (!doneOrNot) {}
+                GestureDetector(
+                  onTap: () {
+                    changeStatus(index);
                   },
-                  icon: Icon(doneOrNot ? Icons.check : Icons.close),
-                  color: doneOrNot ? Colors.green : Colors.red,
-                  iconSize: 27,
+                  child: Icon(
+                    doneOrNot ? Icons.check : Icons.close,
+                    color: doneOrNot ? Colors.green : Colors.red,
+                    size: 27,
+                  ),
                 ),
                 SizedBox(
                   width: 10,

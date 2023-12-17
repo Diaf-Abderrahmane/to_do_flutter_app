@@ -40,9 +40,9 @@ class Task {
 
 class _TodoAppState extends State<TodoApp> {
   List allTasks = [
-    Task(title: "title 1", status: true),
-    Task(title: "title 2", status: true),
-    Task(title: "title 3", status: true),
+    Task(title: "title 1", status: false),
+    Task(title: "title 2", status: false),
+    Task(title: "title 3", status: false),
     Task(title: "title 4", status: true),
     Task(title: "lets go", status: true),
   ];
@@ -54,6 +54,12 @@ class _TodoAppState extends State<TodoApp> {
         Task(title: myController.text, status: false),
       );
       // myText = myController.text;
+    });
+  }
+
+  changeStatus(int taskIndex) {
+    setState(() {
+      allTasks[taskIndex].status = !allTasks[taskIndex].status;
     });
   }
 
@@ -179,6 +185,7 @@ class _TodoAppState extends State<TodoApp> {
                     itemCount: allTasks.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Todocard(
+                        changeStatus: changeStatus,
                         delete: deleteTask,
                         index: index,
                         vartitle: allTasks[index].title,
