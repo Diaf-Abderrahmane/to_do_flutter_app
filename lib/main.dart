@@ -122,7 +122,7 @@ class _TodoAppState extends State<TodoApp> {
             size: 32,
           ),
         ),
-        backgroundColor: Colors.amber[100],
+        backgroundColor: Colors.amber[200],
         // backgroundColor: Color.fromRGBO(58, 66, 86, 0.7),
         appBar: AppBar(
           elevation: 0,
@@ -145,10 +145,27 @@ class _TodoAppState extends State<TodoApp> {
                 allTodos: allTasks.length,
                 allCompleted: calculateCompletedTasks(),
               ),
-              ...allTasks.map((item) => Todocard(
-                    vartitle: item.title,
-                    doneOrNot: item.status,
-                  ))
+              Container(
+                margin: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.amber[100],
+                ),
+                height: 500,
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                child: ListView.builder(
+                    itemCount: allTasks.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Todocard(
+                        vartitle: allTasks[index].title,
+                        doneOrNot: allTasks[index].status,
+                      );
+                    }),
+              ),
+              // ...allTasks.map((item) => Todocard(
+              //       vartitle: item.title,
+              //       doneOrNot: item.status,
+              //     ))
             ],
           ),
         ));
