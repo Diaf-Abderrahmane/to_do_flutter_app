@@ -57,6 +57,18 @@ class _TodoAppState extends State<TodoApp> {
     });
   }
 
+  deleteTask(int index) {
+    setState(() {
+      allTasks.remove(allTasks[index]);
+    });
+  }
+
+  deleteAllTasks() {
+    setState(() {
+      allTasks.clear();
+    });
+  }
+
   int calculateCompletedTasks() {
     int completedTasks = 0;
 
@@ -125,6 +137,16 @@ class _TodoAppState extends State<TodoApp> {
         backgroundColor: Colors.amber[200],
         // backgroundColor: Color.fromRGBO(58, 66, 86, 0.7),
         appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                deleteAllTasks();
+              },
+              icon: Icon(Icons.delete_forever),
+              iconSize: 32,
+              color: Colors.red[400],
+            ),
+          ],
           elevation: 0,
           title: Text(
             "TO DO APP",
@@ -152,11 +174,13 @@ class _TodoAppState extends State<TodoApp> {
                   color: Colors.amber[100],
                 ),
                 height: 500,
-                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
+                padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
                 child: ListView.builder(
                     itemCount: allTasks.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Todocard(
+                        delete: deleteTask,
+                        index: index,
                         vartitle: allTasks[index].title,
                         doneOrNot: allTasks[index].status,
                       );
